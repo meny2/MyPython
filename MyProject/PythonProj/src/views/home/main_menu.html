@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification {
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 50%;
+        }
+
+        .menu {
+            float: left;
+            width: 200px;
+            background-color: #366;
+            color: #fff;
+            height: 100vh;
+            transition: width 0.5s; /* Transition effect for smooth animation */
+            position: relative; /* Relative positioning for absolute positioning of icon "fixed"*/
+            top: 20;
+            /* left: 0; */
+            padding-top: 60px; /* Adjust according to header height */
+            box-sizing: border-box;
+        }   
+
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu li {
+            padding: 10px;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu a:hover {
+            background-color: #555;
+        }    
+
+        /* Style for collapse/expand icon */
+        .collapse-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        /* Style for collapse/expand button */
+        .collapse-btn {
+            display: none; /* Hide the button by default */
+        }
+
+        .menu.collapsed .collapse-btn {
+            display: block; /* Show the button when menu is collapsed */
+        }
+        
+        .main-section {
+            margin-left: 200px; /* Adjust according to menu width */
+            padding: 20px;
+            height: 88vh;
+            transition: margin-left 0.5s; /* Transition effect for smooth animation */
+        }
+
+        .footer {
+            background-color: #399;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <span class="notification">3</span> <!-- Example notification -->
+        </div>
+        <div>
+            <span>Login Name</span> <!-- Example login name -->
+        </div>
+    </div>
+
+    <div class="menu" id="menu">
+        <ul>
+            <li><a href="dashboard.html" target="main-frame">Dashboard</a></li>
+            <li><a href="product.html" target="main-frame">Product</a></li>
+            <li><a href="goods_receive.html" target="main-frame">Goods Receive</a></li>
+            <li><a href="goods_issue.html" target="main-frame">Goods Issue</a></li>
+            <li><a href="transfer.html" target="main-frame">Transfer</a></li>
+            <li><a href="balance_stock.html" target="main-frame">Balance Stock</a></li>
+            <li><a href="report.html" target="main-frame">Report</a></li>
+            <li><a href="setup.html" target="main-frame">Setup</a></li>
+            <li><a href="logout.html" target="main-frame">Logout</a></li>
+        </ul>
+        <i class="fas fa-bars collapse-icon" onclick="toggleMenu()"></i>
+    </div>
+
+    <div class="main-section" id="main-section">
+        <iframe name="main-frame" width="100%" height="100%" frameborder="0" src="dashboard.html"></iframe>
+    </div>
+
+    <div class="footer">
+        Footer
+    </div>
+
+    <script>        
+        function toggleMenu() {
+            var menu = document.getElementById('menu');
+            var main = document.getElementById('main-section');
+            if (menu.style.width === '200px') {
+                menu.style.width = '50px';
+                main.style.marginLeft = '70px'; // Adjust the margin to keep the same effective width
+            } else {
+                menu.style.width = '200px';
+                main.style.marginLeft = '220px'; // Adjust the margin to keep the same effective width
+            }
+        }
+    </script>
+
+</body>
+</html>
