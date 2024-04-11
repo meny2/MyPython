@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification {
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 50%;
+        }
+
+        .menu {
+            float: left;
+            width: 200px;
+            background-color: #366;
+            color: #fff;
+            height: 100vh;
+            transition: width 0.5s; /* Transition effect for smooth animation */
+            position: relative; /* Relative positioning for absolute positioning of icon "fixed"*/
+            top: 20;
+            /* left: 0; */
+            padding-top: 60px; /* Adjust according to header height */
+            box-sizing: border-box;
+        }   
+
+        .menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu li {
+            padding: 10px;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu a:hover {
+            background-color: #555;
+        }    
+
+        /* Style for collapse/expand icon */
+        .collapse-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        /* Style for collapse/expand button */
+        .collapse-btn {
+            display: none; /* Hide the button by default */
+        }
+
+        .menu.collapsed .collapse-btn {
+            display: block; /* Show the button when menu is collapsed */
+        }
+        
+        .main-section {
+            margin-left: 200px; /* Adjust according to menu width */
+            padding: 20px;
+            height: 88vh;
+            transition: margin-left 0.5s; /* Transition effect for smooth animation */
+        }
+
+        .footer {
+            background-color: #399;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <span class="notification">3</span> <!-- Example notification -->
+        </div>
+        <div>
+            <span>Login Name</span> <!-- Example login name -->
+        </div>
+    </div>
+
+    <div class="menu" id="menu">
+        <ul>
+            <li><a id="dashboardlink" href="#" onclick="openFile('/dashboardlink')">Dashboard</a></li>
+            <li><a id="productlink" href="#" onclick="openFile('/productlink')">Product</a></li>
+            <li><a id="goods_receivelink" href="#" onclick="openFile('/goods_receivelink')">Goods Receive</a></li>
+            <li><a id="goods_issuelink" href="#" onclick="openFile('/goods_issuelink')">Goods Issue</a></li>
+            <li><a id="transferlink" href="#" onclick="openFile('/transferlink')">Transfer</a></li>
+            <li><a id="balance_stocklink" href="#" onclick="openFile('/balance_stocklink')">Balance Stock</a></li>
+            <li><a id="reportlink" href="#" onclick="openFile('/reportlink')">Report</a></li>
+            <li><a id="setuplink" href="#" onclick="openFile('/setuplink')">Setup</a></li>
+            <li><a id="logoutlink" href="#" onclick="openFile('/logoutlink')">Logout</a></li>
+        </ul>
+        <i class="fas fa-bars collapse-icon" onclick="toggleMenu()"></i>
+    </div>
+
+    <script>
+        function openFile(fileName) {
+            var frame = document.getElementById('main-frame');
+            frame.src = fileName;
+        }
+    </script>
+
+
+    <div class="main-section" id="main-section">       
+        <iframe id="main-frame" width="100%" height="100%" frameborder="0" src=""></iframe>
+        <script>
+            document.getElementById('main-frame').src = '/dashboardlink';
+        </script>
+    </div>
+
+    <div class="footer">
+        Footer
+    </div>
+
+    <script>        
+        function toggleMenu() {
+            var menu = document.getElementById('menu');
+            var main = document.getElementById('main-section');
+            if (menu.style.width === '200px') {
+                menu.style.width = '50px';
+                main.style.marginLeft = '70px'; // Adjust the margin to keep the same effective width
+            } else {
+                menu.style.width = '200px';
+                main.style.marginLeft = '220px'; // Adjust the margin to keep the same effective width
+            }
+        }
+    </script>
+
+</body>
+</html>
