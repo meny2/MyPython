@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;            
+            background-image: url('/static/images/background.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;            
+        }
+        .container {
+            display: flex;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .left {
+            flex: 1;
+            padding: 20px;
+        }
+        .left img {
+            width: 100%;
+            border-radius: 10px 0 0 10px;
+        }
+        .right {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        form {
+            max-width: 300px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        form input[type="text"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        form button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <!-- รูปภาพทางซ้าย -->
+            <img src="{{ url_for('static', filename='images/left_image.png') }}" alt="Left Image" cache="no-cache">
+            <!-- ข้อความ -->
+            <h2>Welcome to Our Website</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum rhoncus ante quis ultrices fermentum.</p>
+        </div>
+        <div class="right">
+            <!-- Form Login -->
+            <form action="/login" method="post">
+                <h2>Login</h2>
+                {% if error %}
+                    <p>{{ error }}</p>
+                {% endif %}
+                <input type="text" name="username" placeholder="Username" required><br>
+                <input type="password" name="password" placeholder="Password" required><br>
+                <a href="{{ url_for('forgot_password') }}">Forgot Password?</a>
+                <p>Don't have an account? <a href="{{ url_for('registration_user') }}">Register here</a></p><br><br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

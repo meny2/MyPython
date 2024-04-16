@@ -103,23 +103,23 @@
             <span class="notification">3</span> <!-- Example notification -->
         </div>
         <div>
-            <span>Login Name</span> <!-- Example login name -->
+            <span>{{ username }}</span> <!-- Example login name -->
         </div>
     </div>
 
     <div class="menu" id="menu">
         <ul>
-            <li><a id="dashboardlink" href="#" onclick="openFile('/dashboardlink')">Dashboard</a></li>
-            <li><a id="productlink" href="#" onclick="openFile('/productlink')">Product</a></li>
-            <li><a id="goods_receivelink" href="#" onclick="openFile('/goods_receivelink')">Goods Receive</a></li>
-            <li><a id="goods_issuelink" href="#" onclick="openFile('/goods_issuelink')">Goods Issue</a></li>
-            <li><a id="transferlink" href="#" onclick="openFile('/transferlink')">Transfer</a></li>
-            <li><a id="balance_stocklink" href="#" onclick="openFile('/balance_stocklink')">Balance Stock</a></li>
-            <li><a id="reportlink" href="#" onclick="openFile('/reportlink')">Report</a></li>
-            <li><a id="setuplink" href="#" onclick="openFile('/setuplink')">Setup</a></li>
-            <li><a id="logoutlink" href="#" onclick="openFile('/logoutlink')">Logout</a></li>
+            <li><a id="dashboard" href="#" onclick="openFile('/dashboard')">Dashboard</a></li>
+            <li><a id="product" href="#" onclick="openFile('/product')">Product</a></li>
+            <li><a id="goods_receive" href="#" onclick="openFile('/goods_receive')">Goods Receive</a></li>
+            <li><a id="goods_issue" href="#" onclick="openFile('/goods_issue')">Goods Issue</a></li>
+            <li><a id="transfer" href="#" onclick="openFile('/transfer')">Transfer</a></li>
+            <li><a id="balance_stock" href="#" onclick="openFile('/balance_stock')">Balance Stock</a></li>
+            <li><a id="report" href="#" onclick="openFile('/report')">Report</a></li>
+            <li><a id="setup" href="#" onclick="openFile('/setup')">Setup</a></li>
+            <li><a id="logout">Logout</a></li>  <!-- <li><a id="logout" href="{{ url_for('home') }}">Logout</a></li> -->
         </ul>
-        <i class="fas fa-bars collapse-icon" onclick="toggleMenu()"></i>
+        <i class="fas fa-bars collapse-icon" onclick="toggleMenu()"></i>       
     </div>
 
     <script>
@@ -129,11 +129,25 @@
         }
     </script>
 
+    <script>
+        document.getElementById('logout').addEventListener('click', function() {
+            // แสดงหน้าต่างยืนยัน
+            var isConfirmed = confirm('คุณแน่ใจหรือไม่ที่ต้องการออกจากระบบ?');
+            
+            // ถ้าผู้ใช้ยืนยันการออกจากระบบ
+            if (isConfirmed) {
+                // ดำเนินการออกจากระบบ โดยเช่น redirect หรือส่งคำร้องขอไปยังเซิร์ฟเวอร์
+                // ตัวอย่าง: window.location.href = '/logout'; // ให้ลิงก์ไปยังหน้าออกจากระบบ
+                // หรือส่งคำร้องขอไปยังเซิร์ฟเวอร์เพื่อออกจากระบบ
+                window.location.href = '/';
+            }
+        });
+    </script>
 
     <div class="main-section" id="main-section">       
         <iframe id="main-frame" width="100%" height="100%" frameborder="0" src=""></iframe>
         <script>
-            document.getElementById('main-frame').src = '/dashboardlink';
+            document.getElementById('main-frame').src = '/dashboard';
         </script>
     </div>
 
