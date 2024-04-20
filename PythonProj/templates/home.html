@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    
+    <!-- เรียกใช้ไลบรารี LIFF -->
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
     <style>
         body {
             margin: 0;
@@ -86,11 +90,28 @@
                 <input type="text" name="username" placeholder="Username" required><br>
                 <input type="password" name="password" placeholder="Password" required><br>
                 <a href="{{ url_for('forgot_password') }}">Forgot Password?</a>
-                <p>Don't have an account? <a href="{{ url_for('registration_user') }}">Register here</a></p><br><br>
+                <p>Don't have an account? <a href="{{ url_for('registration_user') }}">Register here</a></p>
+                <p>Line Notify <a href="{{ url_for('line_notify') }}">Notify</a></p>
+                <p>Line Mbot (line id : @lte3666t) <a href="{{ url_for('line_messaging_api') }}">Send</a></p>
+                <p>Line login <a href="{{ url_for('line_login') }}">Line Login</a></p><br><br>
                 <button type="submit">Login</button>
+                <!-- <button id="line-login-btn" onclick="openLineLogin()">Login with LINE</button> -->
             </form>
         </div>
     </div>
+
+
+    <!-- ฟังก์ชัน JavaScript เพื่อเรียกใช้ LINE Login Popup -->
+    <script>
+        async function openLineLogin() {
+            const liffData = await liff.init({ liffId: "04694759-7ymoKrlD" });
+            if (!liffData.error) {                               
+                liff.login();
+            } else {
+                console.error("LIFF initialization failed:", liffData.error);
+            }
+        }
+    </script>
 
 </body>
 </html>

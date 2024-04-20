@@ -7,6 +7,9 @@ import os
 from email.message import EmailMessage
 from connect_db import connect_to_database, verify_user_login, verify_email, update_password, insert_user
 from valid_email import is_valid_email
+from line_messaging_api import send_line_message
+from line_notify import send_line_notify
+import requests
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -136,6 +139,75 @@ def registration_add():
     else:
         print(f"The email '{email}' does not have a valid format.")
         return render_template('registration_user.html')
+
+@app.route('/line_notify')
+def line_notify():
+    # เรียกใช้งานฟังก์ชันเพื่อส่งข้อความ https://notify-bot.line.me/th/  (Menu > Mypage)
+    token = '6jx70dXAMNtE79HzanZec4JynVLfEC5B5JLXic0mwxp'  
+    message = 'Hello, ส่งข้อความผ่าน Python มาแล้ว!'
+    send_line_notify(message, token)    
+    return redirect(url_for('home'))
+
+@app.route('/line_messaging_api')
+def line_messaging_api():
+    # เรียกใช้งานฟังก์ชัน send_line_message โดยกำหนด access token และข้อความที่ต้องการส่ง
+    #access_token = 'WG8k57uXmx5Zh8alAdgV5WMVDdaTEANoWNS1JE2EyN2i1AMSfVa+++HQ2ngtxq87V9AzF0TmtUNhbO7X/SXGVVgGTvh7Xh5ydXDVY+yssUrmveA6VIFJwNBWL+m8tO4c8YmhAZOUKkqDxgoWoTh1QgdB04t89/1O/w1cDnyilFU='
+    access_token = 'TyehqT2uC7wyXBslk5T1f9khtLpGXId5+az9vLX7wQnK6Bs5NQsfbA5rcYzNaV6SkC5CwKJRMHf0yPQ0X2/YAtyb2v776gy3GnShZK18aDh4Jw7JN6ONkvwTYDvIl0d9RUtT+CK30ghg03ZPVeNBegdB04t89/1O/w1cDnyilFU='
+    user_id = 'U95823232d2a38ada5a3cc379cbd47710'
+    message = 'Hello, World!'
+    send_line_message(access_token, user_id, message)    
+    return redirect(url_for('home'))
+
+# Configuration for LINE Login
+CLIENT_ID = '2004694759'
+CLIENT_SECRET = '0bdd583ebad18cad9643adddcd39f732'
+REDIRECT_URI = 'http://127.0.0.1:5000/callback'
+AUTH_URL = 'https://access.line.me/oauth2/v2.1/authorize'
+PROFILE_URL = 'https://api.line.me/v2/profile'
+
+@app.route('/line_login')
+def line_login():  
+    # Redirect the user to the LINE Login page
+    params = {
+        'response_type': 'code',
+        'client_id': CLIENT_ID,
+        'redirect_uri': REDIRECT_URI,
+        'state': 'some_random_state',
+        'scope': 'openid profile',
+    }
+    auth_url = f"{AUTH_URL}?{'&'.join([f'{key}={value}' for key, value in params.items()])}"
+    return redirect(auth_url)
+    #return render_template('line_login.html', auth_url=auth_url)    
+
+@app.route('/callback')
+def callback():
+    # Handle the callback from LINE Login
+    code = request.args.get('code')    
+    if code:
+        # Exchange the code for an access token
+        token_url = 'https://api.line.me/oauth2/v2.1/token'
+        data = {
+            'grant_type': 'authorization_code',
+            'code': code,
+            'redirect_uri': REDIRECT_URI,
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET,
+        }
+        response = requests.post(token_url, data=data)
+        if response.ok:
+            access_token = response.json()['access_token']            
+            # Now you have the access token, you can use it to make requests to the LINE API
+            #return "Login successful! Access token: " + access_token
+        
+            # Use the access token to get the user's profile
+            headers = {'Authorization': f'Bearer {access_token}'}
+            profile_response = requests.get(PROFILE_URL, headers=headers)
+            if profile_response.ok:
+                user_id = profile_response.json()['userId']
+                # Now you have the LINE user ID
+                return f"LINE user ID: {user_id}"
+            
+    return "Failed to login"
 
 if __name__ == '__main__':
     app.run(debug=True)

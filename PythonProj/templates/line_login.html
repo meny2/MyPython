@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LINE Login</title>
+    
+    <script type="text/javascript">
+        function openPopup(url) {
+            var width = 600;
+            var height = 400;
+            var left = (screen.width / 2) - (width / 2);
+            var top = (screen.height / 2) - (height / 2);
+            window.open(url, '_blank', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
+            /*
+            popup = window.open(url, '_blank', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=no,width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
+            // Check if the popup window is closed
+            var timer = setInterval(function() {
+                if (popup.closed) {
+                    clearInterval(timer);
+                    window.location.href = '/callback'; // Redirect to callback page //
+                    //window.location.href="{{ url_for('callback') }}"
+                }
+            }, 1000);
+            */
+        }
+    </script>    
+</head>
+<body>
+    <h2>Login with LINE</h2>    
+    <button onclick="openPopup('{{ auth_url }}')">Login with LINE</button>
+</body>
+</html>
